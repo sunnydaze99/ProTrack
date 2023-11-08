@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professor Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .registration-container {
+            max-width: 500px; /* Increase the max-width for a larger window */
+            margin: 0 auto;
+            padding: 30px; /* Increase the padding for more spacing */
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #ff66e8;
+            color: #fff;
+            padding: 10px;
+            margin-top: 20px; /* Increase the margin for a bigger gap */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h1>Professor Registration</h1>
+        <form action="pConnection.php" method="post">
+            <label for="professorName">Name:</label>
+            <input type="text" id="professorName" name="professorName" required>
+
+            <label for="professorEmail">Email:</label>
+            <input type="email" id="professorEmail" name="professorEmail" required>
+
+            <label for="professorPassword">Password:</label>
+            <input type="password" id="professorPassword" name="professorPassword" required>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</body>
+</html>
+
+
+

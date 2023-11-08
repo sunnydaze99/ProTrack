@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="ivstyle.css">
+    <title>Instructor View</title>
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Syllabus</h1><br>
+    <p style="margin-left: 40px;">Hello Course Instructor! Please fill out your course requirements below to create a syllabus.</p>
+    
+    <div class="container">
+        <form action="pviewcon.php" method="post">
+            <div class="row">
+                <div class="col-2">
+                  <label for="ptitle">Project Title</label>
+                </div>
+                <div class="col-10">
+                  <input type="text" id="ptitle" name="projecttitle" placeholder="Project Title..">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                  <label for="tpoints">Total Points</label>
+                </div>
+                <div class="col-10">
+                  <input type="number" id="tpoints" name="totalpoints" placeholder="# of total course points...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                  <label for="outcomes">Learning Outcomes</label>
+                </div>
+                <div class="col-10">
+                  <input type="text" id="outcomes" name="learningoutcomes" placeholder="Learning Outcomes..">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                  <label for="pdescrip">Project Description</label>
+                </div>
+                <div class="col-10">
+                  <input type="text" id="pdescrip" name="projectdescription" placeholder="Project Description..">
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-2">
+                  <label for="req">Requirements</label>
+                </div>
+                <div class="col-10">
+                  <table id="editableTable1">
+                    <tr>
+                      <th contenteditable="true">Column 1</th>
+                    </tr>
+                    <tr>
+                      <td contenteditable="true">Row 1, Column 1</td>
+                    </tr>
+                  </table><br>
+                  <button type="button" onclick="addColumn1()">Add Column</button>
+                  <button type="button" onclick="addRow1()">Add Row</button>       
+                </div>
+            </div><br>
+            <div class="row">
+              <div class="col-2">
+                <label for="req">Number of Phases</label>
+              </div>
+              <div class="col-10">
+                <table id="editableTable2">
+                  <tr>
+                    <th contenteditable="true">Column 1</th>
+                  </tr>
+                </table><br>
+                <button type="button" onclick="addColumn2()">Add Column</button>       
+              </div>
+            </div><br>
+
+            <div class="row">
+              <div class="col-2">
+                <label for="req">Assignment Rubrics</label>
+              </div>
+              <div class="col-10">
+                <table id="editableTable3">
+                  <tr>
+                    <th contenteditable="true">Column 1</th>
+                  </tr>
+                  <tr>
+                    <td contenteditable="true">Row 1, Column 1</td>
+                  </tr>
+                </table><br>
+                <button type="button" onclick="addColumn3()">Add Column</button>
+                <button type="button" onclick="addRow3()">Add Row</button>       
+              </div>
+          </div><br>
+
+          <div class="row">
+            <input type="submit" value="Submit" id="submitButton">
+          </div>
+            
+        </form>
+    </div>
+  </body>
+</html>

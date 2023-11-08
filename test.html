@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Editable Table</title>
+</head>
+<body>
+    <h1>Editable Table</h1>
+
+    <table id="editableTable">
+        <tr>
+            <th contenteditable="true">Column 1</th>
+        </tr>
+        <tr>
+            <td contenteditable="true">Row 1, Column 1</td>
+        </tr>
+    </table>
+
+    <button onclick="addColumn()">Add Column</button>
+    <button onclick="addRow()">Add Row</button>
+
+    <script>
+        function addColumn() {
+            const table = document.getElementById("editableTable");
+            const headerRow = table.rows[0];
+            const newRow = table.rows[1];
+
+            const newHeaderCell = document.createElement("th");
+            newHeaderCell.contentEditable = true;
+            newHeaderCell.textContent = "New Column";
+
+            const newCell = document.createElement("td");
+            newCell.contentEditable = true;
+            newCell.textContent = "New Data";
+
+            headerRow.appendChild(newHeaderCell);
+            newRow.appendChild(newCell);
+        }
+
+        function addRow() {
+            const table = document.getElementById("editableTable");
+            const newRow = table.insertRow(-1);
+
+            const cell = newRow.insertCell(0);
+            cell.contentEditable = true;
+            cell.textContent = "New Row Data";
+
+            for (let i = 1; i < table.rows[0].cells.length; i++) {
+                const newCell = document.createElement("td");
+                newCell.contentEditable = true;
+                newCell.textContent = "New Data";
+                newRow.appendChild(newCell);
+            }
+        }
+    </script>
+</body>
+</html>

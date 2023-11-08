@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="idashstyle.css">
+    <title>Instructor View</title>
+    <script>
+    $('.nav-toggle').click(function(e) {
+  
+        e.preventDefault();
+        $("html").toggleClass("openNav");
+        $(".nav-toggle").toggleClass("active");
+    });
+    </script>
+</head>
+<body>
+    <div class="primary-nav">
+
+        <button href="#" class="hamburger open-panel nav-toggle">
+    <span class="screen-reader-text">Menu</span>
+    </button>
+    
+        <nav role="navigation" class="menu">
+    
+        <a href="welcome.html" class="logotype">ProTrack!</a>
+    
+        <div class="overflow-container">
+    
+            <ul class="menu-dropdown">
+        
+            <li class="menu-hasdropdown">
+                <a href="#">Settings</a><span class="icon"><i class="fa fa-gear"></i></span>
+    
+                <label title="toggle menu" for="settings">
+            <span class="downarrow"><i class="fa fa-caret-down"></i></span>
+            </label>
+                <input type="checkbox" class="sub-menu-checkbox" id="settings" />
+    
+                <ul class="sub-menu-dropdown">
+                    <li><a href="">Syllabus</a></li>
+                    <li><a href="">Student Projects</a></li>
+                    <li><a href="">Testing and Validation</a></li>
+                    <li><a href="">Account</a></li>
+                </ul>
+            </li>
+        
+            <li><a href="#">Messages</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
+    
+            </ul>
+    
+        </div>
+    
+        </nav>
+    
+    </div>
+    
+    <div class="new-wrapper">
+    
+        <div id="main">
+    
+        <div id="main-contents">
+    
+            <h1>Welcome to the Instructor Dashboard</h1>
+    
+            
+        </div>
+    
+        </div>
+    
+    </div>
+</body>
+</html>
