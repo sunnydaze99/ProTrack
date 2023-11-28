@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="idashstyle.css">
+    <style>
+        /* Style for the class details page */
+        #classDetails {
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #3498db; /* Blue */
+            color: #fff;
+        }
+    </style>
+    <title>Class Details</title>
+</head>
+<body>
+    <div class="new-wrapper">
+        <div id="main">
+            <div id="main-contents">
+                <h1>Class Details</h1>
+                <div id="classDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+    <script>
+        // Function to extract class details from the URL
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        // Get the class ID from the URL
+        var classId = getParameterByName('classId');
+
+        // Display class details
+        var classDetails = '<div id="classDetails">' +
+                                '<h2>' + classData[classId].name + ' Class</h2>' +
+                                '<p>' + classData[classId].details + '</p>' +
+                            '</div>';
+
+        // Append class details to the page
+        $('#classDetails').html(classDetails);
+    </script>
+</body>
+</html>
