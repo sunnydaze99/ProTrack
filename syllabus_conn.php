@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Syllabus created successfully";
-        header("Location: instructordash.html");
+        header("Location: student_projects.html");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

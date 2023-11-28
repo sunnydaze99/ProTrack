@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="idashstyle.css">
+    <link rel="stylesheet" href="ivstyle.css">
+    <title>Instructor View</title>
+    <script type="text/javascript" src="script.js"></script>
+    <script>
+    $('.nav-toggle').click(function(e) {
+  
+        e.preventDefault();
+        $("html").toggleClass("openNav");
+        $(".nav-toggle").toggleClass("active");
+    });
+    </script>
+</head>
+<body>
+    <div class="primary-nav">
+        <button href="#" class="hamburger open-panel nav-toggle">
+            <span class="screen-reader-text">Menu</span>
+        </button>
+        <nav role="navigation" class="menu">
+    
+            <a href="welcome.html" class="logotype">ProTrack!</a>
+        
+            <div class="overflow-container">
+    
+                <ul class="menu-dropdown">
+            
+                <li class="menu-hasdropdown">
+                    <a href="instructordash.html" style="margin-top: 20px;">Dashboard</a>
+        
+                    <ul class="sub-menu-dropdown">
+                        <li><a href="create_syllabus.html">Create Syllabus</a></li>
+                        <li><a href="student_projects.html">Student Projects</a></li>
+                        <li><a href="">Account</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </li>
+            
+                <li><a href="#">Messages</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
+        
+                </ul>
+    
+            </div>
+        </nav>
+    </div>
+    
+    <div class="new-wrapper">
+    
+        <div id="main">
+    
+        <div id="main-contents"> 
+            <h1>Create Syllabus</h1>
+            <br>
+
+            <div class="container">
+                <form action="syllabus_conn.php" method="post">
+                    <div class="row">
+                        <div class="col-2">
+                          <label for="ptitle">Project Title</label>
+                        </div>
+                        <div class="col-10">
+                          <input type="text" id="ptitle" name="project_title" placeholder="Project Title..">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                          <label for="tpoints">Total Points</label>
+                        </div>
+                        <div class="col-10">
+                          <input type="number" id="tpoints" name="total_points" placeholder="# of total course points...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                          <label for="outcomes">Learning Outcomes</label>
+                        </div>
+                        <div class="col-10">
+                          <input type="text" id="outcomes" name="learning_outcomes" placeholder="Learning Outcomes..">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                          <label for="pdescrip">Project Description</label>
+                        </div>
+                        <div class="col-10">
+                          <input type="text" id="pdescrip" name="project_description" placeholder="Project Description..">
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-2">
+                          <label for="req">Requirements</label>
+                        </div>
+                        <div class="col-10">
+                          <table id="editableTable1">
+                            <tr>
+                              <th contenteditable="true">
+                                <textarea name="requirements_title[]" ></textarea>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td contenteditable="true">
+                                <textarea name="requirements[]" ></textarea>
+                              </td>
+                            </tr>
+                          </table><br>
+                          <button type="button" onclick="addColumn1()">Add Column</button>
+                          <button type="button" onclick="addRow1()">Add Row</button>       
+                        </div>
+                    </div><br>
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="req">Number of Phases</label>
+                      </div>
+                      <div class="col-10">
+                        <table id="editableTable2">
+                          <tr>
+                            <th contenteditable="true">
+                              <input type="text" name="num_phases[]">
+                            </th>
+                          </tr>
+                        </table><br>
+                        <button type="button" onclick="addColumn2()">Add Column</button>       
+                      </div>
+                    </div><br>
+        
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="req">Assignment Rubrics</label>
+                      </div>
+                      <div class="col-10">
+                        <table id="editableTable3">
+                          <tr>
+                            <th contenteditable="true">
+                              <textarea name="rubrics_title[]" rows="4"></textarea>
+                            </th>
+                          </tr>
+                          <tr>
+                            <td contenteditable="true">
+                              <textarea name="rubrics[]" rows="4"></textarea>
+                            </td>
+                          </tr>
+                        </table><br>
+                        <button type="button" onclick="addColumn3()">Add Column</button>
+                        <button type="button" onclick="addRow3()">Add Row</button>       
+                      </div>
+                  </div><br>
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="req">Generate Key</label>
+                    </div>
+                  <div class="col-10">
+                      <button type="button" onclick="generateKey()">Generate Key</button>
+                      <input type="text" id="generatedKey" name="generated_key" readonly>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <input type="submit" value="Submit" id="submitButton">
+                  </div>
+                    
+                </form>
+            </div>
+        </div>
+        
+    
+        </div>
+    
+    </div>
+</body>
+</html>

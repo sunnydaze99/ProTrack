@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $studentName = $_POST["studentName"];
     $studentEmail = $_POST["studentEmail"];
-    $studentPassword = $_POST["studentPassword"];
+    $studentPassword = trim($_POST["studentPassword"]);
     // Hash the password for security.
     $hashedPassword = password_hash($studentPassword, PASSWORD_DEFAULT);
 

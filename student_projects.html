@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="idashstyle.css">
-    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.6.4.min.js">
     <style>
         .card-container {
             text-align: center;
@@ -57,13 +56,40 @@
         }
     </style>
     <title>Instructor View</title>
+    <script type="text/javascript" src="isp.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    $('.nav-toggle').click(function(e) {
-  
-        e.preventDefault();
-        $("html").toggleClass("openNav");
-        $(".nav-toggle").toggleClass("active");
-    });
+        $(document).ready(function() {
+            $('.nav-toggle').click(function(e) {
+                e.preventDefault();
+                $("html").toggleClass("openNav");
+                $(".nav-toggle").toggleClass("active");
+            });
+
+            $('.card-button').click(function(e) {
+                e.preventDefault();
+                var card = $(this).closest('.card');
+                var projectDetails = card.find('.project-details');
+
+                // Simulate an AJAX request (replace this with your actual AJAX request)
+                $.ajax({
+                    url: 'http://localhost:3000/protrack/api/getProjectDetails', // Replace with your actual server endpoint
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(responseData) {
+                        // Update the card content with project details
+                        projectDetails.html('<p>Title: ' + responseData.title + '</p><p>Students: ' + responseData.numStudents + '</p>');
+
+                        // Toggle the expansion of the card
+                        card.toggleClass('expanded');
+                    },
+                    error: function() {
+                        // Handle errors here
+                        console.error('Error fetching project details');
+                    }
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -84,7 +110,7 @@
                     <ul class="sub-menu-dropdown">
                         <li><a href="create_syllabus.html">Create Syllabus</a></li>
                         <li><a href="student_projects.html">Student Projects</a></li>
-                        <li><a href="#">Account</a></li>
+                        <li><a href="">Account</a></li>
                         <li><a href="#">Settings</a></li>
                     </ul>
                 </li>
@@ -99,21 +125,17 @@
     
     <div class="new-wrapper">
     
-        <div id="main">
-    
         <div id="main-contents"> 
-            <h1 style="padding-bottom: 20px;">Instructor Dashboard</h1>
+            <h1>Student Projects</h1>
+    
             <div class="card">
                 <h2 class="card-title">Student Projects</h2>
                 <p class="card-text">Explore student projects and assignments.</p>
-                <a href="student_projects.html" class="card-button">Go to Student Projects</a>
-            </div>
-            <div class="card">
-                <h2 class="card-title">Create Syllabus</h2>
-                <p class="card-text">Make a new syllabus for a new project</p>
-                <a href="create_syllabus.html" class="card-button">Go to Student Projects</a>
+                <a href="#" class="card-button">View Project</a>
+                <div class="project-details"></div> <!-- Display project details here when expanded -->
             </div>
         </div>
+    
     </div>
 </body>
 </html>

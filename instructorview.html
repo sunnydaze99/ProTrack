@@ -20,7 +20,7 @@
                   <label for="ptitle">Project Title</label>
                 </div>
                 <div class="col-10">
-                  <input type="text" id="ptitle" name="projecttitle" placeholder="Project Title..">
+                  <input type="text" id="ptitle" name="project_title" placeholder="Project Title..">
                 </div>
             </div>
             <div class="row">
@@ -28,7 +28,7 @@
                   <label for="tpoints">Total Points</label>
                 </div>
                 <div class="col-10">
-                  <input type="number" id="tpoints" name="totalpoints" placeholder="# of total course points...">
+                  <input type="number" id="tpoints" name="total_points" placeholder="# of total course points...">
                 </div>
             </div>
             <div class="row">
@@ -36,7 +36,7 @@
                   <label for="outcomes">Learning Outcomes</label>
                 </div>
                 <div class="col-10">
-                  <input type="text" id="outcomes" name="learningoutcomes" placeholder="Learning Outcomes..">
+                  <input type="text" id="outcomes" name="learning_outcomes" placeholder="Learning Outcomes..">
                 </div>
             </div>
             <div class="row">
@@ -44,7 +44,7 @@
                   <label for="pdescrip">Project Description</label>
                 </div>
                 <div class="col-10">
-                  <input type="text" id="pdescrip" name="projectdescription" placeholder="Project Description..">
+                  <input type="text" id="pdescrip" name="project_description" placeholder="Project Description..">
                 </div>
             </div><br>
             <div class="row">
@@ -54,10 +54,14 @@
                 <div class="col-10">
                   <table id="editableTable1">
                     <tr>
-                      <th contenteditable="true">Column 1</th>
+                      <th contenteditable="true">
+                        <textarea name="requirements_title[]" ></textarea>
+                      </th>
                     </tr>
                     <tr>
-                      <td contenteditable="true">Row 1, Column 1</td>
+                      <td contenteditable="true">
+                        <textarea name="requirements[]" ></textarea>
+                      </td>
                     </tr>
                   </table><br>
                   <button type="button" onclick="addColumn1()">Add Column</button>
@@ -71,7 +75,9 @@
               <div class="col-10">
                 <table id="editableTable2">
                   <tr>
-                    <th contenteditable="true">Column 1</th>
+                    <th contenteditable="true">
+                      <input type="text" name="num_phases[]">
+                    </th>
                   </tr>
                 </table><br>
                 <button type="button" onclick="addColumn2()">Add Column</button>       
@@ -85,17 +91,29 @@
               <div class="col-10">
                 <table id="editableTable3">
                   <tr>
-                    <th contenteditable="true">Column 1</th>
+                    <th contenteditable="true">
+                      <textarea name="rubrics_title[]" rows="4"></textarea>
+                    </th>
                   </tr>
                   <tr>
-                    <td contenteditable="true">Row 1, Column 1</td>
+                    <td contenteditable="true">
+                      <textarea name="rubrics[]" rows="4"></textarea>
+                    </td>
                   </tr>
                 </table><br>
                 <button type="button" onclick="addColumn3()">Add Column</button>
                 <button type="button" onclick="addRow3()">Add Row</button>       
               </div>
           </div><br>
-
+          <div class="row">
+            <div class="col-2">
+              <label for="req">Generate Key</label>
+            </div>
+          <div class="col-10">
+              <button type="button" onclick="generateKey()">Generate Key</button>
+              <input type="text" id="generatedKey" name="generated_key" readonly>
+          </div>
+          </div>
           <div class="row">
             <input type="submit" value="Submit" id="submitButton">
           </div>

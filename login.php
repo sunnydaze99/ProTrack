@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Create a database connection (replace with your actual database credentials).
     $hostname = "localhost";
     $username = "root";
-    $password = "";
+		$password = "";
     $database = "protrack!";
 
     try {

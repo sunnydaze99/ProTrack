@@ -1,32 +1,35 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $studentName = $_POST["professorName"];
-    $studentEmail = $_POST["professorEmail"];
-    $studentPassword = $_POST["professorPassword"];
-    // Hash the password for security.
+    $hostname = "localhost";
+    $username = "root";
+	$password = "";
+    $database = "protrack!";
+
+    $conn = new mysqli($hostname, $username, $password, $database);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Retrieve form data
+    $professorName = $_POST['professorName'];
+    $professorEmail = $_POST['professorEmail'];
+    $professorPassword = $_POST['professorPassword'];
+
+    // Hash the password
     $hashedPassword = password_hash($professorPassword, PASSWORD_DEFAULT);
 
-    // Create a database connection (replace with your actual database credentials).
-    $dsn = "mysql:host=localhost;dbname=protrack!";
-    $username = "root";
-    $password = "";
+    // Insert data into the professors table
+    $sql = "INSERT INTO pusers (professorName, professorEmail, professorPassword)
+            VALUES ('$professorName', '$professorEmail', '$hashedPassword')";
 
-    try {
-        $db = new PDO($dsn, $username, $password);
-
-        // Insert user data into the users table.
-        $sql = "INSERT INTO pusers (professorName, professorEmail, professorPassword) VALUES (:name, :email, :password)";
-        $stmt = $db->prepare($sql);
-        $stmt->execute([
-            ':name' => $studentName,
-            ':email' => $studentEmail,
-            ':password' => $hashedPassword,
-        ]);
-
-        // Redirect to a success page or perform other actions as needed.
+    if ($conn->query($sql) === TRUE) {
+        echo "Instructor registration successful";
         header("Location: instructorview.html");
-        exit;
-    } catch (PDOException $e) {
-        echo "Database error: " . $e->getMessage();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
+
+    // Close the database connection
+    $conn->close();
 }

@@ -135,8 +135,6 @@ body {
   color: #ff90e8;
 }
 
-
-
 .menu label {
   margin-bottom: 0;
   display: block;
@@ -153,11 +151,6 @@ body {
 input#menu[type="checkbox"] {
   display: none;
 }
-
-
-
-
-
 
 .sub-menu-dropdown {
   display:contents;
@@ -276,21 +269,6 @@ input#menu[type="checkbox"] {
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
 }
   
-  /* label.hamburger {
-    display: none;
-  } */
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* look and feel only, not needed for core menu*/
 
@@ -359,18 +337,7 @@ input#menu[type="checkbox"] {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* Resposive Typography */
-
-
 body,
 button,
 input,
