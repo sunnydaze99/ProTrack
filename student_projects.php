@@ -1,4 +1,22 @@
+<?php
+// Step 1: Connect to the database
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "protrack!";
 
+$conn = new mysqli($hostname, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Step 2: Retrieve data from the database
+$sql = "SELECT * FROM syllabus";
+$result = $conn->query($sql);
+
+// Step 3: Display data in HTML
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +30,7 @@
         .card {
             display: inline-block;
             width: 250px; /* Set a fixed width for each card */
-            margin: 0 10px; /* Add some margin between cards */
+            margin: 0 30px; /* Add some margin between cards */
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -59,35 +77,51 @@
     <script type="text/javascript" src="isp.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.nav-toggle').click(function(e) {
+        $(document).ready(function () {
+            $('.nav-toggle').click(function (e) {
                 e.preventDefault();
                 $("html").toggleClass("openNav");
                 $(".nav-toggle").toggleClass("active");
             });
 
-            $('.card-button').click(function(e) {
-                e.preventDefault();
-                var card = $(this).closest('.card');
-                var projectDetails = card.find('.project-details');
+            // Object to store class information
+            var classData = {};
 
-                // Simulate an AJAX request (replace this with your actual AJAX request)
-                $.ajax({
-                    url: 'http://localhost:3000/protrack/api/getProjectDetails', // Replace with your actual server endpoint
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(responseData) {
-                        // Update the card content with project details
-                        projectDetails.html('<p>Title: ' + responseData.title + '</p><p>Students: ' + responseData.numStudents + '</p>');
+            // Function to handle the "Add Class" button click
+            $('#addClassButton').click(function () {
+                // Prompt the user to enter the class name
+                var className = prompt("Enter the class name:");
 
-                        // Toggle the expansion of the card
-                        card.toggleClass('expanded');
-                    },
-                    error: function() {
-                        // Handle errors here
-                        console.error('Error fetching project details');
-                    }
-                });
+                // Check if the user entered a class name
+                if (className !== null && className.trim() !== "") {
+                    // Generate a unique ID for the class (in this example, using the current timestamp)
+                    var classId = "class_" + Date.now();
+
+                    // Add class information to the object
+                    classData[classId] = {
+                        name: className,
+                        details: "Class details go here."
+                    };
+
+                    // Create a new list item for the class with rounded square styling
+                    var newClassItem = $('<li>').text(className).attr('id', classId).addClass('rounded-square');
+
+                    // Append the new class item to the list
+                    $('#classList').append(newClassItem);
+
+                    // Add click event to redirect to the class details page
+                    newClassItem.click(function () {
+                        // Redirect to the class details page
+                        window.location.href = 'class_page.html?classId=' + classId;
+                    });
+
+                    // Optionally, you can add more styling or functionality here
+
+                    // Alert with the added class information (you can remove this if not needed)
+                    alert("Class added!\nClass Name: " + className + "\nClass ID: " + classId);
+                } else {
+                    alert("Class name cannot be empty. Please try again.");
+                }
             });
         });
     </script>
@@ -109,7 +143,7 @@
                     <a href="instructordash.html" style="margin-top: 20px;">Dashboard</a>
                     <ul class="sub-menu-dropdown">
                         <li><a href="create_syllabus.html">Create Syllabus</a></li>
-                        <li><a href="student_projects.php">Student Projects</a></li>
+                        <li><a href="student_projects.html">Student Projects</a></li>
                         <li><a href="">Account</a></li>
                         <li><a href="#">Settings</a></li>
                     </ul>
@@ -122,18 +156,23 @@
             </div>
         </nav>
     </div>
-    
     <div class="new-wrapper">
     
         <div id="main-contents"> 
-            <h1>Student Projects</h1>
+            <h1 style="margin: 40px">Student Projects</h1>
     
             <div class="card">
-                <h2 class="card-title">Student Projects</h2>
-                <p class="card-text">Explore student projects and assignments.</p>
+                <h2 class="card-title">Project 1</h2>
+                <p class="card-text">blahhhh......</p>
                 <a href="#" class="card-button">View Project</a>
-                <div class="project-details"></div> <!-- Display project details here when expanded -->
             </div>
+        <div>
+            <!-- Add Class button -->
+            <button id="addClassButton">Add Class</button>
+
+            <!-- List to display added classes -->
+            <ul id="classList"></ul>
+        </div>
         </div>
     
     </div>
