@@ -1,74 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="idashstyle.css">
+    <style>
+        /* Additional CSS for rounded squares */
+        #classList li {
+            color: #fff; /* Text color */
+            padding: 30px;
+            margin: 10px; /* Margin between class boxes */
+            border-radius: 15px; /* Rounded corners */
+            display: inline-block;
+            width: 300px; /* Adjust the width as needed */
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer; /* Add pointer cursor for clickable effect */
+        }
+
+        /* Assign a different background color to each class */
+        #classList li:nth-child(odd) {
+            background-color: #ff66e8; 
+        }
+
+        #classList li:nth-child(even) {
+            background-color: #FFB6C1; /* Red */
+        }
+    </style>
     <title>Student View</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
     <script>
-    $('.nav-toggle').click(function(e) {
-  
-        e.preventDefault();
-        $("html").toggleClass("openNav");
-        $(".nav-toggle").toggleClass("active");
-    });
+        $(document).ready(function () {
+            $('.nav-toggle').click(function (e) {
+                e.preventDefault();
+                $("html").toggleClass("openNav");
+                $(".nav-toggle").toggleClass("active");
+            });
+
+            // Function to handle the "Join Class" button click
+            $('#joinClassButton').click(function () {
+                // Prompt the user to enter the class ID
+                var classId = prompt("Enter the class ID:");
+
+                // Check if the user entered a class ID
+                if (classId !== null && classId.trim() !== "") {
+                    // Redirect to the student class details page with the entered class ID
+                    window.location.href = 'student_class_page.html?classId=' + classId;
+                } else {
+                    alert("Class ID cannot be empty. Please try again.");
+                }
+            });
+        });
     </script>
 </head>
 <body>
     <div class="primary-nav">
-
-        <button href="#" class="hamburger open-panel nav-toggle">
-    <span class="screen-reader-text">Menu</span>
-    </button>
-    
+        <span class="screen-reader-text">Menu</span>
         <nav role="navigation" class="menu">
-    
-        <a href="welcome.html" class="logotype">ProTrack!</a>
-    
-        <div class="overflow-container">
-    
-            <ul class="menu-dropdown">
-        
-            <li class="menu-hasdropdown">
-                <a href="#">Settings</a><span class="icon"><i class="fa fa-gear"></i></span>
-    
-                <label title="toggle menu" for="settings">
-            <span class="downarrow"><i class="fa fa-caret-down"></i></span>
-            </label>
-                <input type="checkbox" class="sub-menu-checkbox" id="settings" />
-    
-                <ul class="sub-menu-dropdown">
-                    <li><a href="">Syllabus</a></li>
-                    <li><a href="">Project Plan</a></li>
-                    <li><a href="">Testing and Validation</a></li>
-                    <li><a href="">Account</a></li>
+            <a href="welcome.html"><img src="2.png" alt="Logo" class="logo"></a>
+            <div class="overflow-container">
+                <ul class="menu-dropdown">
+                    <li><a href="#">Dashboard</a><span class="icon"><i class="fa fa-dashboard"></i></span></li>
+                    <li class="menu-hasdropdown">
+                        <a href="#">Settings</a><span class="icon"><i class="fa fa-gear"></i></span>
+                        <label title="toggle menu" for="settings">
+                            <span class="downarrow"><i class="fa fa-caret-down"></i></span>
+                        </label>
+                        <input type="checkbox" class="sub-menu-checkbox" id="settings" />
+                        <ul class="sub-menu-dropdown">
+                            <li><a href="">Syllabus</a></li>
+                            <li><a href="">Project Plan</a></li>
+                            <li><a href="">Testing and Validation</a></li>
+                            <li><a href="">Account</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Favourites</a><span class="icon"><i class="fa fa-heart"></i></span></li>
+                    <li><a href="#">Messages</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
                 </ul>
-            </li>
-        
-            <li><a href="#">Messages</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
-    
-            </ul>
-    
-        </div>
-    
+            </div>
         </nav>
-    
     </div>
-    
+
     <div class="new-wrapper">
-    
         <div id="main">
-    
-        <div id="main-contents">
-    
-            <h1>Welcome to the Student Dashboard</h1>
-    
-            
+            <div id="main-contents">
+                <h1>Student Dashboard</h1>
+                <p class="intro"><strong>some words here</strong>.</p>
+                
+                <!-- Join Class button -->
+                <button id="joinClassButton">Join Class</button>
+
+                <!-- List to display added classes -->
+                <ul id="classList"></ul>
+            </div>
         </div>
-    
-        </div>
-    
     </div>
 </body>
 </html>
