@@ -1,25 +1,10 @@
-<?php
-
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-@include 'config.php';
-
-if (!isset($_SESSION['id'])) {
-  echo "Error: User ID not set in the session.";
-  exit;
-}
-
-$_SESSION['professorID'] = $_SESSION['id'];
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="idashstyle.css">
+    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.6.4.min.js">
     <style>
         .card-container {
             text-align: center;
@@ -71,7 +56,6 @@ $_SESSION['professorID'] = $_SESSION['id'];
         }
     </style>
     <title>Instructor View</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     $('.nav-toggle').click(function(e) {
   
@@ -83,8 +67,10 @@ $_SESSION['professorID'] = $_SESSION['id'];
 </head>
 <body>
     <div class="primary-nav">
-        <button href="" class="hamburger open-panel nav-toggle"></button>
-        <nav role="navigation" class="menu" id="menu-dropdown">
+        <button href="#" class="hamburger open-panel nav-toggle">
+            <span class="screen-reader-text">Menu</span>
+        </button>
+        <nav role="navigation" class="menu">
     
             <a href="welcome.html" class="logotype">ProTrack!</a>
         
@@ -93,15 +79,16 @@ $_SESSION['professorID'] = $_SESSION['id'];
                 <ul class="menu-dropdown">
             
                 <li class="menu-hasdropdown">
-                    <a href="instructordash.php" style="margin-top: 20px;">Dashboard</a>
+                    <a href="instructordash.html" style="margin-top: 20px;">Dashboard</a>
                     <ul class="sub-menu-dropdown">
-                    <li><a href="create_syllabus.php">Create Syllabus</a></li>
-                        <li><a href="view_student_projects.php">Student Projects</a></li>
+                        <li><a href="create_syllabus.html">Create Syllabus</a></li>
+                        <li><a href="student_projects.php">Student Projects</a></li>
                         <li><a href="#">Account</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
                     </ul>
-                </li>        
+                </li>
+        
                 </ul>
     
             </div>
@@ -117,12 +104,12 @@ $_SESSION['professorID'] = $_SESSION['id'];
             <div class="card">
                 <h2 class="card-title">Student Projects</h2>
                 <p class="card-text">Explore student projects and assignments.</p>
-                <a href="view_student_projects.php" class="card-button">Go to Student Projects</a>
+                <a href="student_projects.php" class="card-button">Go to Student Projects</a>
             </div>
             <div class="card">
                 <h2 class="card-title">Create Syllabus</h2>
                 <p class="card-text">Make a new syllabus for a new project</p>
-                <a href="create_syllabus.php" class="card-button">Go to Student Projects</a>
+                <a href="create_syllabus.html" class="card-button">Go to Student Projects</a>
             </div>
         </div>
     </div>

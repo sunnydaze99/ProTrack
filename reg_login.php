@@ -1,5 +1,4 @@
 <?php
-
 @include 'config.php';
 
 session_start();
@@ -8,7 +7,6 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = trim($_POST['password']);
 
-    // Use prepared statement to prevent SQL injection
     $select = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($select);
 
@@ -19,7 +17,7 @@ if (isset($_POST['submit'])) {
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                
+
                 if (password_verify($password, $row['password'])) {
                     //echo 'User Type: ' . $row['user_type'];
 
@@ -27,12 +25,10 @@ if (isset($_POST['submit'])) {
                     $_SESSION['user_type'] = $row['user_type'];
 
                     if ($row['user_type'] == 'instructor') {
-                        var_dump($_SESSION);
-                        header('Location: instructordash.php');
+                        header('Location: pviewcon.php');
                         exit;
                     } elseif ($row['user_type'] == 'student') {
-                        var_dump($_SESSION);
-                        header('Location: studentdash.php');
+                        header('Location: sviewcon.php');
                         exit;
                     }
                 } else {
@@ -50,7 +46,6 @@ if (isset($_POST['submit'])) {
         $error[] = 'Error in query preparation: ' . $conn->error;
     }
 }
-
 ?>
 
 

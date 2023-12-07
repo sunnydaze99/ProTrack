@@ -1,4 +1,5 @@
 <?php
+@include 'config.php';
 
 session_start();
 error_reporting(E_ALL);
@@ -11,8 +12,16 @@ if (!isset($_SESSION['id'])) {
   exit;
 }
 
-$_SESSION['professorID'] = $_SESSION['id'];
+$_SESSION['student_id'] = $_SESSION['id'];
 
+// if (isset($_SESSION['id'])) {
+//     $_SESSION['student_id'] = $_SESSION['id'];
+// } else {
+//     echo "User ID not set in the session.";
+//     header('location:login.php');
+// }
+
+//print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,15 +79,30 @@ $_SESSION['professorID'] = $_SESSION['id'];
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
     </style>
-    <title>Instructor View</title>
+    <title>Student View</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    $('.nav-toggle').click(function(e) {
-  
-        e.preventDefault();
-        $("html").toggleClass("openNav");
-        $(".nav-toggle").toggleClass("active");
-    });
+        $(document).ready(function () {
+            $('.nav-toggle').click(function (e) {
+                e.preventDefault();
+                $("html").toggleClass("openNav");
+                $(".nav-toggle").toggleClass("active");
+            });
+
+            // Function to handle the "Join Class" button click
+            $('#joinClassButton').click(function () {
+                // Prompt the user to enter the class ID
+                var classId = prompt("Enter the class ID:");
+
+                // Check if the user entered a class ID
+                if (classId !== null && classId.trim() !== "") {
+                    // Redirect to the student class details page with the entered class ID
+                    window.location.href = 'student_class_page.html?classId=' + classId;
+                } else {
+                    alert("Class ID cannot be empty. Please try again.");
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -93,10 +117,9 @@ $_SESSION['professorID'] = $_SESSION['id'];
                 <ul class="menu-dropdown">
             
                 <li class="menu-hasdropdown">
-                    <a href="instructordash.php" style="margin-top: 20px;">Dashboard</a>
+                    <a href="studentdash.php" style="margin-top: 20px;">Dashboard</a>
                     <ul class="sub-menu-dropdown">
-                    <li><a href="create_syllabus.php">Create Syllabus</a></li>
-                        <li><a href="view_student_projects.php">Student Projects</a></li>
+                        <li><a href="student_projects.php">Projects</a></li>
                         <li><a href="#">Account</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
@@ -113,17 +136,23 @@ $_SESSION['professorID'] = $_SESSION['id'];
         <div id="main">
     
         <div id="main-contents"> 
-            <h1 style="padding-bottom: 20px;">Instructor Dashboard</h1>
+            <h1 style="padding-bottom: 20px;">Student Dashboard</h1>
             <div class="card">
-                <h2 class="card-title">Student Projects</h2>
-                <p class="card-text">Explore student projects and assignments.</p>
-                <a href="view_student_projects.php" class="card-button">Go to Student Projects</a>
+                <h2 class="card-title">Your Projects</h2>
+                <p class="card-text">View your Projects</p>
+                <a href="student_projects.php" class="card-button">Go to Student Projects</a>
             </div>
             <div class="card">
-                <h2 class="card-title">Create Syllabus</h2>
-                <p class="card-text">Make a new syllabus for a new project</p>
-                <a href="create_syllabus.php" class="card-button">Go to Student Projects</a>
+                <h2 class="card-title">Create a new project</h2>
+                <p class="card-text"><i style="color: black;" class="fa-duotone fa-plus"></i></p>
+                <a href="create_project.php" class="card-button">Enter</a>
             </div>
+
+            <!-- Join Class button -->
+            <button id="joinClassButton">Join Class</button>
+
+            <!-- List to display added classes -->
+            <ul id="classList"></ul>
         </div>
     </div>
 </body>
