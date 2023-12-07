@@ -10,21 +10,56 @@
             color: #fff; /* Text color */
             padding: 30px;
             margin: 10px; /* Margin between class boxes */
-            border-radius: 15px; /* Rounded corners */
+            border-radius: 8px; /* Rounded corners */
             display: inline-block;
-            width: 300px; /* Adjust the width as needed */
+            width: 250px; /* Adjust the width as needed */
             text-align: center;
             font-weight: bold;
             cursor: pointer; /* Add pointer cursor for clickable effect */
-        }
-
-        /* Assign a different background color to each class */
-        #classList li:nth-child(odd) {
-            background-color: #ff66e8; 
+            background-color: #ff90e8; /* Background color for odd items */
         }
 
         #classList li:nth-child(even) {
-            background-color: #FFB6C1; /* Red */
+            background-color: #FFB6C1; /* Background color for even items */
+        }
+
+        .card {
+            display: inline-block;
+            width: 250px;
+            margin: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin: 10px;
+        }
+
+        .card-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: #ff90e8;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-button:hover {
+            background-color: #ff90e8;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
     </style>
     <title>Student View</title>
@@ -37,18 +72,23 @@
                 $(".nav-toggle").toggleClass("active");
             });
 
-            // Function to handle the "Join Class" button click
-            $('#joinClassButton').click(function () {
-                // Prompt the user to enter the class ID
-                var classId = prompt("Enter the class ID:");
+            // Function to handle the "Join a Project" button click
+            $('#addClassButton').click(function () {
+                // Prompt the user to enter the project key
+                var projectKey = prompt("Enter the project key:");
 
-                // Check if the user entered a class ID
-                if (classId !== null && classId.trim() !== "") {
-                    // Redirect to the student class details page with the entered class ID
-                    window.location.href = 'student_class_page.html?classId=' + classId;
+                // Check if the user entered a project key
+                if (projectKey !== null && projectKey.trim() !== "") {
+                    // Redirect to the page with the entered project key
+                    window.location.href = 'join_project.html?key=' + projectKey;
                 } else {
-                    alert("Class ID cannot be empty. Please try again.");
+                    alert("Project key cannot be empty. Please try again.");
                 }
+            });
+
+            // Function to handle the "View Classes" button click
+            $('#viewClassesButton').click(function () {
+                // Implement the functionality for viewing classes here
             });
         });
     </script>
@@ -57,7 +97,7 @@
     <div class="primary-nav">
         <span class="screen-reader-text">Menu</span>
         <nav role="navigation" class="menu">
-            <a href="welcome.html"><img src="2.png" alt="Logo" class="logo"></a>
+            <a href="welcome.html" class="logotype">ProTrack!</a>
             <div class="overflow-container">
                 <ul class="menu-dropdown">
                     <li><a href="#">Dashboard</a><span class="icon"><i class="fa fa-dashboard"></i></span></li>
@@ -68,10 +108,11 @@
                         </label>
                         <input type="checkbox" class="sub-menu-checkbox" id="settings" />
                         <ul class="sub-menu-dropdown">
-                            <li><a href="">Syllabus</a></li>
-                            <li><a href="">Project Plan</a></li>
-                            <li><a href="">Testing and Validation</a></li>
-                            <li><a href="">Account</a></li>
+                            <li><a href="create_syllabus.html">Create Syllabus</a></li>
+                            <li><a href="student_projects.php">Student Projects</a></li>
+                            <li><a href="#">Account</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
                         </ul>
                     </li>
                     <li><a href="#">Favourites</a><span class="icon"><i class="fa fa-heart"></i></span></li>
@@ -85,15 +126,18 @@
         <div id="main">
             <div id="main-contents">
                 <h1>Student Dashboard</h1>
-                <p class="intro"><strong>some words here</strong>.</p>
-                
-                <!-- Join Class button -->
-                <button id="joinClassButton">Join Class</button>
-
-                <!-- List to display added classes -->
-                <ul id="classList"></ul>
+                <div class="card">
+                    <h2 class="card-title">Join a Project</h2>
+                    <a href="#" id="addClassButton" class="card-button">Join a Project</a>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">View Projects</h2>
+                    <a href="#" id="viewClassesButton" class="card-button">View Projects</a>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+
