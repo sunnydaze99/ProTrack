@@ -34,8 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertQuery = "INSERT INTO syllabus (project_title, total_points, learning_outcomes, project_description, requirements_title, requirements, num_phases, rubrics_title, rubrics, generated_key, professorID)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $insertStmt = $conn->prepare($insertQuery);
+  
+
         // Bind parameters to the prepared statement
-        $stmt->bind_param("ssssssssssi", $projectTitle, $totalPoints, $learningOutcomes, $projectDescription, $requirements_title, $requirements, $numPhases, $rubrics_title, $rubrics, $generatedKey, $professorID);
+        $insertStmt->bind_param("ssssssssssi", $projectTitle, $totalPoints, $learningOutcomes, $projectDescription, $requirements_title, $requirements, $numPhases, $rubrics_title, $rubrics, $generatedKey, $professorID);
 
         if ($insertStmt->execute()) {
             // Database insertion successful
@@ -62,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyA7HJN15u7ffIehXW1lPxpe2FZKbI" crossorigin="anonymous">
     <link rel="stylesheet" href="idashstyle.css">
     <link rel="stylesheet" href="ivstyle.css">
     <title>Instructor View</title>
