@@ -12,7 +12,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 $_SESSION['professorID'] = $_SESSION['id'];
-print_r($_SESSION);
+// print_r($_SESSION);
 
 ?>
 <!DOCTYPE html>

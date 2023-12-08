@@ -77,7 +77,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyA7HJN15u7ffIehXW1lPxpe2FZKbI" crossorigin="anonymous">
     <link rel="stylesheet" href="idashstyle.css">
     <link rel="stylesheet" href="ivstyle.css">
-    <title>Instructor View</title>
+    <title>Student View</title>
     <script type="text/javascript" src="script.js"></script>
     <script>
     $('.nav-toggle').click(function(e) {
