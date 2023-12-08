@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart</title>
+
+    <!-- Include dhtmlxGantt CSS and JS files -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
+    <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: 'LEMONMILK-Regular', sans-serif;
+            margin: 0;
+            background-color: #eee;
+            color: black;
+        }
+
+        h1 {
+            font-family: 'LEMONMILK-Bold', sans-serif;
+            color: #ff90e8;
+            text-align: center;
+        }
+
+        #ganttChart {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
+
+        #taskForm {
+            margin-top: 20px;
+            margin-left: 5px;
+            text-align: left;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .input-container {
+            flex: 1;
+            margin: 8px;
+        }
+
+        label {
+            display: block;
+            font-family: 'LEMONMILK-Light', sans-serif;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        button {
+            width: calc(100% - 16px);
+            padding: 12px;
+            box-sizing: border-box;
+            font-family: 'LEMONMILK-Light', sans-serif;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #ff90e8;
+            color: black;
+            text-transform: capitalize;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'LEMONMILK-Bold', sans-serif;
+            border: none;
+            margin-right: 8px;
+            margin-top: 20px; /* Move down by 3 pixels */
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gantt Chart</h1>
+
+    <div id="ganttChart"></div>
+
+    <div id="taskForm">
+        <div class="input-container">
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" required>
+        </div>
+        <div class="input-container">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" required>
+        </div>
+        <div class="input-container">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" required>
+        </div>
+        <div class="input-container">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize dhtmlxGantt chart
+            gantt.init("ganttChart");
+    
+            // Gantt chart configuration
+            gantt.config.xml_date = "%Y-%m-%d %H:%i";
+            gantt.config.scale_unit = "week";
+            gantt.config.step = 1;
+            gantt.config.date_scale = "%W %M";
+            gantt.config.subscales = [
+                { unit: "day", step: 1, date: "%d %M" }
+            ];
+            gantt.config.scale_height = 50;
+            gantt.config.fit_tasks = true;
+    
+            // Define columns for the grid
+            gantt.config.columns = [
+                { name: "text", label: "Task name", tree: true, width: 150 },
+                { name: "start_date", label: "Start time", align: "center", width: 100 },
+                { name: "end_date", label: "End time", align: "center", width: 100 }
+            ];
+    
+            // Initialize the Gantt chart without sample tasks
+            gantt.parse({ data: [] });
+        });
+    
+        // Function to add tasks to the Gantt chart
+        function addTask() {
+            var taskName = document.getElementById("taskName").value;
+            var startDate = new Date(document.getElementById("startDate").value);
+            var endDate = new Date(document.getElementById("endDate").value);
+    
+            // Generate a random color for the task
+            var color = getRandomColor();
+    
+            var task = {
+                "text": taskName,
+                "start_date": startDate,
+                "end_date": endDate,
+                "color": color
+            };
+    
+            // Add the task to the Gantt chart
+            gantt.addTask(task);
+    
+            // Clear the form fields after adding the task
+            document.getElementById("taskName").value = "";
+            document.getElementById("startDate").value = "";
+            document.getElementById("endDate").value = "";
+        }
+    
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+    
+    
+    
+</body>
+</html>

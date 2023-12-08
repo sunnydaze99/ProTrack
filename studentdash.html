@@ -8,20 +8,20 @@
     <style>
         /* Additional CSS for rounded squares */
         #classList li {
-            color: #fff; /* Text color */
+            color: #fff;
             padding: 30px;
-            margin: 10px; /* Margin between class boxes */
-            border-radius: 8px; /* Rounded corners */
+            margin: 10px;
+            border-radius: 8px;
             display: inline-block;
-            width: 250px; /* Adjust the width as needed */
+            width: 250px;
             text-align: center;
             font-weight: bold;
-            cursor: pointer; /* Add pointer cursor for clickable effect */
-            background-color: #ff90e8; /* Background color for odd items */
+            cursor: pointer;
+            background-color: #ff90e8;
         }
 
         #classList li:nth-child(even) {
-            background-color: #FFB6C1; /* Background color for even items */
+            background-color: #FFB6C1;
         }
 
         .card {
@@ -64,7 +64,7 @@
         }
     </style>
     <title>Student View</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.nav-toggle').click(function (e) {
@@ -75,12 +75,9 @@
 
             // Function to handle the "Join a Project" button click
             $('#addClassButton').click(function () {
-                // Prompt the user to enter the project key
                 var projectKey = prompt("Enter the project key:");
 
-                // Check if the user entered a project key
                 if (projectKey !== null && projectKey.trim() !== "") {
-                    // Redirect to the page with the entered project key
                     window.location.href = 'join_project.html?key=' + projectKey;
                 } else {
                     alert("Project key cannot be empty. Please try again.");
@@ -90,6 +87,11 @@
             // Function to handle the "View Classes" button click
             $('#viewClassesButton').click(function () {
                 // Implement the functionality for viewing classes here
+            });
+
+            // Function to handle the "Add Gantt Chart" button click
+            $('#addGantChart').click(function () {
+                window.location.href = 'create_gantt_chart.html';
             });
         });
     </script>
@@ -111,6 +113,7 @@
                         <ul class="sub-menu-dropdown">
                             <li><a href="create_syllabus.html">Create Syllabus</a></li>
                             <li><a href="student_projects.php">Student Projects</a></li>
+                            <li><a href="gantt.html">Gantt Chart</a></li>
                             <li><a href="#">Account</a></li>
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
@@ -135,10 +138,15 @@
                     <h2 class="card-title">View Projects</h2>
                     <a href="#" id="viewClassesButton" class="card-button">View Projects</a>
                 </div>
+                <div class="card">
+                    <h2 class="card-title">Add Gantt Chart</h2>
+                    <a href="#" id="addGantChart" class="card-button">Add Gantt Chart</a>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
 
 
