@@ -10,7 +10,7 @@ $professorID = $_SESSION['id'];
 if (empty($professorID)) {
     die("Error: Professor ID not set.");
 }
-echo "Professor ID: " . $professorID;
+//echo "Professor ID: " . $professorID;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data

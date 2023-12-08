@@ -74,11 +74,11 @@
             });
 
             // Function to handle the "Join a Project" button click
-            $('#addClassButton').click(function () {
+            $('#joinProjButton').click(function () {
                 var projectKey = prompt("Enter the project key:");
 
                 if (projectKey !== null && projectKey.trim() !== "") {
-                    window.location.href = 'join_project.html?key=' + projectKey;
+                    window.location.href = '#?key=' + projectKey;
                 } else {
                     alert("Project key cannot be empty. Please try again.");
                 }
@@ -119,8 +119,6 @@
                             <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
                         </ul>
                     </li>
-                    <li><a href="#">Favourites</a><span class="icon"><i class="fa fa-heart"></i></span></li>
-                    <li><a href="#">Messages</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
                 </ul>
             </div>
         </nav>
@@ -132,7 +130,7 @@
                 <h1>Student Dashboard</h1>
                 <div class="card">
                     <h2 class="card-title">Join a Project</h2>
-                    <a href="#" id="addClassButton" class="card-button">Join a Project</a>
+                    <a href="#" id="joinProjButton" class="card-button">Join a Project</a>
                 </div>
                 <div class="card">
                     <h2 class="card-title">View Projects</h2>

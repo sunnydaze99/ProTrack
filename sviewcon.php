@@ -3,101 +3,72 @@
 
 session_start();
 
-// Check if the student is logged in
-if (!isset($_SESSION['id']) || empty($_SESSION['id'])) {
-    // Redirect to login or handle accordingly
-    header('Location: login.php');
-    exit;
-}
-
-// Extract student's ID
+// Assuming you have stored professor ID during login
 $studentID = $_SESSION['id'];
+
+// Check if professor ID is set
+if (empty($studentID)) {
+    die("Error: Professor ID not set.");
+}
 
 // Fetch list of professors from the database
 $professorsQuery = "SELECT id, name FROM users WHERE user_type = 'instructor'";
 $professorsResult = $conn->query($professorsQuery);
 $professors = $professorsResult->fetch_all(MYSQLI_ASSOC);
 
-// Fetch list of students from the database
-$studentsQuery = "SELECT id, name FROM users WHERE user_type = 'student'";
-$studentsResult = $conn->query($studentsQuery);
-$students = $studentsResult->fetch_all(MYSQLI_ASSOC);
 
-// Fetch list of students associated with the current project
-$projectStudentsQuery = "SELECT u.id, u.name FROM users u
-                         JOIN team_members tm ON u.id = tm.student_id
-                         WHERE tm.project_id = ?";
-
-$projectStudentsStmt = $conn->prepare($projectStudentsQuery);
-$projectStudentsStmt->bind_param("i", $projectPlanID);
-$projectStudentsStmt->execute();
-$projectStudentsResult = $projectStudentsStmt->get_result();
-$projectStudents = $projectStudentsResult->fetch_all(MYSQLI_ASSOC);
-
-
-//debug
-//echo "Student ID: " . $studentID;
-
-//project plan submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $teamNumber = $_POST['team_number'];
     $professorID = $_POST['professor_id'];
+    $meetingTime = $_POST['meeting_time'];
+    $meetingPlace = $_POST['meeting_place'];
 
     // Insert into project_plan table
-    $insertQuery = "INSERT INTO project_plans(team_number, professor_id) VALUES (?, ?)";
-    //debug
-    echo $insertQuery;
-    $insertStmt = $conn->prepare($insertQuery);
-    if (!$insertStmt) {
+    $insertProjectPlanQuery = "INSERT INTO project_plans(team_number, professor_id, meeting_time, meeting_place) VALUES (?, ?, ?, ?)";
+    $insertProjectPlanStmt = $conn->prepare($insertProjectPlanQuery);
+    if (!$insertProjectPlanStmt) {
         die('Error in preparing the insert statement: ' . $conn->error);
     }
-    $insertStmt->bind_param("si", $teamNumber, $professorID);
+    $insertProjectPlanStmt->bind_param("siss", $teamNumber, $professorID, $meetingTime, $meetingPlace);
 
-    if ($insertStmt->execute()) {
+    if ($insertProjectPlanStmt->execute()) {
         $projectPlanID = $conn->insert_id; // Get the auto-generated project_plan_id
 
         // Insert into team_members table
-        for ($i = 1; isset($_POST['name' . $i]); $i++) {
-            $name = $_POST['name' . $i];
-            $studentID = $_POST['student_id' . $i];
-            $contact = $_POST['contact' . $i];
-            $description = $_POST['description' . $i];
-
-            $insertTeamMemberQuery = "INSERT INTO team_members (project_plan_id, name, student_id, contact, description) VALUES (?, ?, ?, ?, ?)";
+        foreach ($_POST['team_members'] as $teamMember) {
+            $insertTeamMemberQuery = "INSERT INTO team_members (project_id, name, student_id, contact, description) VALUES (?, ?, ?, ?, ?)";
             $insertTeamMemberStmt = $conn->prepare($insertTeamMemberQuery);
-            $insertTeamMemberStmt->bind_param("isiss", $projectPlanID, $name, $studentID, $contact, $description);
+            $insertTeamMemberStmt->bind_param("isiss", $projectPlanID, $teamMember['name'], $teamMember['student_id'], $teamMember['contact'], $teamMember['description']);
             $insertTeamMemberStmt->execute();
         }
 
         // Insert into deliverables table
-        for ($i = 1; isset($_POST['task' . $i]); $i++) {
-            $task = $_POST['task' . $i];
-            $item = $_POST['item' . $i];
-            $phase = $_POST['phase' . $i];
-            $memberResponsible = $_POST['member_responsible' . $i];
-            $mode = $_POST['mode' . $i];
-            $comment = $_POST['comment' . $i];
-
-            $insertDeliverableQuery = "INSERT INTO deliverables (project_plan_id, task, item, phase, member_responsible, mode, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        foreach ($_POST['deliverables'] as $deliverable) {
+            $insertDeliverableQuery = "INSERT INTO deliverables (project_id, task, item, phase, member_responsible, mode, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $insertDeliverableStmt = $conn->prepare($insertDeliverableQuery);
-            $insertDeliverableStmt->bind_param("issssss", $projectPlanID, $task, $item, $phase, $memberResponsible, $mode, $comment);
+            $insertDeliverableStmt->bind_param("issssss", $projectPlanID, $deliverable['task'], $deliverable['item'], $deliverable['phase'], $deliverable['member_responsible'], $deliverable['mode'], $deliverable['comment']);
             $insertDeliverableStmt->execute();
         }
+
+         // Insert into student_project table
+         $insertStudentProjectQuery = "INSERT INTO student_project (student_id, project_id, project_plan_id) VALUES (?, ?, ?)";
+         $insertStudentProjectStmt = $conn->prepare($insertStudentProjectQuery);
+         $insertStudentProjectStmt->bind_param("iii", $studentID, $projectPlanID, $projectPlanID);
+         $insertStudentProjectStmt->execute();
 
         echo "Project Plan created successfully";
         header("Location: studentdash.php");
         exit;
     } else {
-        echo "Error: " . $insertStmt->error;
+        echo "Error: " . $insertProjectPlanStmt->error;
     }
 
-    $insertStmt->close();
+    $insertProjectPlanStmt->close();
 }
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -228,28 +199,35 @@ $conn->close();
             section.removeChild(row);
         }
 
-        // Your JavaScript code for professor dropdown filtering
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     document.getElementById('professor_filter').addEventListener('input', function() {
-        //         var filterText = this.value.toUpperCase();
-        //         var select = document.getElementById('professor_id');
-        //         var options = select.getElementsByTagName('option');
+        document.addEventListener('DOMContentLoaded', function () {
+    const professorDropdown = document.getElementById('professor_id');
+    const professorFilter = document.getElementById('professor_filter');
 
-        //         for (var i = 0; i < options.length; i++) {
-        //             var optionText = options[i].text.toUpperCase();
-        //             if (optionText.includes(filterText)) {
-        //                 options[i].style.display = '';
-        //             } else {
-        //                 options[i].style.display = 'none';
-        //             }
-        //         }
-        //     });
-        // });
+    // Create an array to store original professor options
+    const originalProfessors = Array.from(professorDropdown.options);
+
+    // Add event listener for input changes
+    professorFilter.addEventListener('input', function () {
+        const filterText = this.value.toUpperCase();
+
+        // Clear existing options
+        professorDropdown.innerHTML = '';
+
+        // Filter and add matching options
+        originalProfessors.forEach(function (professor) {
+            const optionText = professor.text.toUpperCase();
+            if (optionText.includes(filterText)) {
+                professorDropdown.add(professor);
+            }
+        });
+    });
+});
+
         
     </script>
 </head>
 <body>
-    <div class="container">
+<div class="container">
         <h1>Project Plan</h1>
         <form action="" method="post">
             <!-- Team Information -->
@@ -257,16 +235,18 @@ $conn->close();
             <label for="team_number">Team Number:</label>
             <input type="text" id="team_number" name="team_number" required placeholder="Assigned by your instructor">
             
-            <!-- <div class="dropdown-wrapper"> -->
-                <label for="professor_id">Select Professor:</label>
-                <!-- <input type="text" id="professor_filter" placeholder="Filter Professors"> -->
-                <select id="professor_id" name="professor_id" required>
-                    <?php foreach ($professors as $professor): ?>
-                        <option value="<?= $professor['id']; ?>"><?= $professor['name']; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            <!-- </div> -->
-            <!-- <input type="text" id="professor_id" name="professor_id" required placeholder="Type in you professor's name"> -->
+            <!-- Professor Filter -->
+            <div class="dropdown-wrapper">
+                <label for="professor_filter">Filter Professors:</label>
+                <input type="text" id="professor_filter" placeholder="Type to filter professors">
+            </div>
+
+            <label for="professor_id">Select Professor:</label>
+            <select id="professor_id" name="professor_id" required>
+                <?php foreach ($professors as $professor): ?>
+                    <option value="<?= $professor['id']; ?>"><?= $professor['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
 
             <!-- Team Members -->
             <h2>Team Members</h2>
@@ -281,9 +261,8 @@ $conn->close();
                             <?php if ($student['id'] != $studentID): ?>
                                 <option value="<?= $student['id']; ?>"><?= $student['name']; ?></option>
                             <?php endif; ?>
-                        <?php endforeach; ?>
+                        <?php endforeach; ?>                    
                     </select>
-                    <!-- <input type="text" id="student_id_1" name="student_id_1" required placeholder="Type in a student's ID"> -->
                     
                     <label for="contact_1">Contact:</label>
                     <input type="text" id="contact_1" name="contact_1" placeholder="Any contact info">
@@ -310,17 +289,16 @@ $conn->close();
                     <label for="task_1">Task:</label>
                     <input type="text" id="task_1" name="task_1">
                     <label for="item_1">Item:</label>
-                    <input type="text" id="item_1" name="item_1" >
+                    <input type="text" id="item_1" name="item_1">
                     <label for="phase_1">Phase:</label>
-                    <input type="text" id="phase_1" name="phase_1" >
+                    <input type="text" id="phase_1" name="phase_1">
                     
-
                     <label for="member_responsible_1">Member Responsible:</label>
-                        <select id="member_responsible_1" name="member_responsible_1">
-                            <?php foreach ($projectStudents as $student): ?>
-                                <option value="<?= $student['id']; ?>"><?= $student['name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>   
+                    <select id="member_responsible_1" name="member_responsible_1">
+                        <?php foreach ($projectStudents as $student): ?>
+                            <option value="<?= $student['id']; ?>"><?= $student['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>   
 
                     <label for="mode_1">Mode:</label>
                     <input type="text" id="mode_1" name="mode_1">

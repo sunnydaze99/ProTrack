@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ul class="sub-menu-dropdown">
                     <li><a href="create_syllabus.php">Create Syllabus</a></li>
                         <li><a href="view_student_projects.php">Student Projects</a></li>
-                        <li><a href="#">Account</a></li>
+                        <li><a href="prof_account.php">Account</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
                     </ul>

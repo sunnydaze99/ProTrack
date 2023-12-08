@@ -90,19 +90,17 @@ $_SESSION['student_id'] = $_SESSION['id'];
                 $(".nav-toggle").toggleClass("active");
             });
 
-            // Function to handle the "Join Class" button click
-            $('#joinClassButton').click(function () {
-                // Prompt the user to enter the class ID
-                var classId = prompt("Enter the class ID:");
+            // Function to handle the "Join a Project" button click
+            $('#joinProjButton').click(function () {
+                var projectKey = prompt("Enter the project key:");
 
-                // Check if the user entered a class ID
-                if (classId !== null && classId.trim() !== "") {
-                    // Redirect to the student class details page with the entered class ID
-                    window.location.href = 'student_class_page.html?classId=' + classId;
+                if (projectKey !== null && projectKey.trim() !== "") {
+                    window.location.href = 'join_project.php?key=' + projectKey;
                 } else {
-                    alert("Class ID cannot be empty. Please try again.");
+                    alert("Project key cannot be empty. Please try again.");
                 }
             });
+
         });
     </script>
 </head>
@@ -121,6 +119,7 @@ $_SESSION['student_id'] = $_SESSION['id'];
                     <a href="studentdash.php" style="margin-top: 20px;">Dashboard</a>
                     <ul class="sub-menu-dropdown">
                         <li><a href="student_projects.php">Projects</a></li>
+                        <li><a href="create_gantt_chart.html">Gantt</a></li>
                         <li><a href="#">Account</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
@@ -139,21 +138,20 @@ $_SESSION['student_id'] = $_SESSION['id'];
         <div id="main-contents"> 
             <h1 style="padding-bottom: 20px;">Student Dashboard</h1>
             <div class="card">
-                <h2 class="card-title">Your Projects</h2>
+                <h2 class="card-title">Your Projects!</h2>
                 <p class="card-text">View your Projects</p>
-                <a href="student_projects.php" class="card-button">Go to Student Projects</a>
+                <a href="student_projects.php" class="card-button">Enter</a>
             </div>
             <div class="card">
-                <h2 class="card-title">Create a new project</h2>
+                <h2 class="card-title">Create a new project!</h2>
                 <p class="card-text"><i style="color: black;" class="fa-duotone fa-plus"></i></p>
                 <a href="create_project.php" class="card-button">Enter</a>
             </div>
-
-            <!-- Join Class button -->
-            <button id="joinClassButton">Join Class</button>
-
-            <!-- List to display added classes -->
-            <ul id="classList"></ul>
+            <div class="card">
+                <h2 class="card-title">Join a project!</h2>
+                <p class="card-text"><i style="color: black;" class="fa-duotone fa-plus"></i></p>
+                <a href="#" id="joinProjButton" class="card-button">Enter</a>
+            </div>
         </div>
     </div>
 </body>

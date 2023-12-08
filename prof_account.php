@@ -11,25 +11,8 @@ if (!isset($_SESSION['id'])) {
 }
 
 $_SESSION['professorID'] = $_SESSION['id'];
-print_r($_SESSION);
 
-// Use prepared statement to avoid SQL injection
-$sql = "SELECT syllabus.*, COUNT(student_project.student_id) AS student_count 
-        FROM syllabus 
-        LEFT JOIN student_project ON syllabus.syllabus_id = student_project.project_id 
-        WHERE syllabus.professorID = ? 
-        GROUP BY syllabus.syllabus_id";
-// Prepare the statement
-$stmt = $conn->prepare($sql);
-
-if ($stmt) {
-    // Bind the parameter
-    $stmt->bind_param("i", $_SESSION['id']);
-
-    // Execute the statement
-    $result = $stmt->execute();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,7 +101,7 @@ if ($stmt) {
                     <ul class="sub-menu-dropdown">
                     <li><a href="create_syllabus.php">Create Syllabus</a></li>
                         <li><a href="view_student_projects.php">Student Projects</a></li>
-                        <li><a href="prof_account.php">Account</a></li>
+                        <li><a href="#">Account</a></li>
                         <li><a href="#">Settings</a></li>
                         <li><a href="#">Messages</a><span class="icon"><i class="fa-thin fa-envelope" style="color: #777;"></i></span></li>
                     </ul>
@@ -128,49 +111,3 @@ if ($stmt) {
             </div>
         </nav>
     </div>
-    <div class="new-wrapper">
-        <div id="main">
-        <div id="main-contents"> 
-            <h1 style="padding-bottom: 20px;">Student Projects</h1>   
-            <?php
-                if ($result) {
-                    // Get the result set
-                    $result = $stmt->get_result();
-
-                    // Output syllabus cards within the main contents section
-                    echo '<div id="main-contents">';
-                    while ($row = $result->fetch_assoc()) {
-                        $syllabusId = $row['syllabus_id'];
-                        $projectTitle = $row['project_title'];
-                        $projectDescription = $row['project_description'];
-                        $studentCount = $row['student_count'];
-
-                        // Output syllabus card
-                        echo "<div class='card'>";
-                        echo "<h2 class='card-title'>$projectTitle</h2>";
-                        echo "<p class='card-text'>$projectDescription</p>";
-                        echo "<p>Student Count: $studentCount</p>";  // Display the student count
-                        echo "<a href='view_projects.php?syllabus_id=$syllabusId' class='card-button'>View Project</a>";
-                        echo "</div>";
-                    }
-                    echo '</div>';
-                } else {
-                    // Handle the case where the query execution failed
-                    echo "Error executing query: " . $stmt->error;
-                }
-
-                // Close the statement
-                $stmt->close();
-            } else {
-                // Handle the case where the statement preparation failed
-                echo "Error preparing statement: " . $conn->error;
-            }
-
-            // Close the connection
-            $conn->close();
-            ?>
-        </div>
-    
-    </div>
-</body>
-</html>
